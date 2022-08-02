@@ -1,0 +1,63 @@
+_satellite.pushAsyncScript(function(event, target, $variables){
+  var xd_target = [],
+  xd_href = '',
+  xd_href_parent = '';
+
+
+function loadFlashTalking() {
+  //console.log("Flashtalking trigerred..");
+  if (window.location.pathname.indexOf('products/xd') > -1) {
+    var ftRandom = Math.random() * 1000000,
+      flashTalk = document.createElement('iframe');
+    flashTalk.style.position = 'absolute';
+    flashTalk.style.display = 'none';
+    flashTalk.style.width = '1';
+    flashTalk.style.height = '1';
+    flashTalk.src = 'https://servedby.flashtalking.com/container/13539;103189;10589;iframe/?spotName=XD_Downloads&cachebuster=' + ftRandom;
+
+    document.body.appendChild(flashTalk);
+  }
+  if (typeof fbq !== 'undefined') {
+    fbq('trackSingle', '1772359959706965', 'XDdownloadclick');
+  }
+
+  //Twitter Conversion Pixel for XD Click
+  if (typeof twttr == 'object' && typeof twttr.conversion == 'object' && typeof twttr.conversion.trackPid == 'function') {
+    twttr.conversion.trackPid('o1w4m', { tw_sale_amount: 0, tw_order_quantity: 0 });
+  } else {
+    var twitterPixel = document.createElement('script');
+    twitterPixel.type = 'text/javascript';
+    twitterPixel.src = '//platform.twitter.com/oct.js';
+    document.body.appendChild(twitterPixel);
+    twttr.conversion.trackPid('o1w4m', { tw_sale_amount: 0, tw_order_quantity: 0 });
+  }
+}
+
+function myFunction(event) {
+
+  xd_target = event.target;
+  xd_href = xd_target.getAttribute('href');
+
+  if (xd_href == null) {
+    xd_href_parent = xd_target.parentElement.getAttribute('href');
+    if (xd_href_parent != null) {
+
+      if (xd_href_parent.indexOf('products/download/xd') != -1 || xd_href_parent.indexOf('/all/xd/installation') != -1 ||
+        xd_href_parent.indexOf('/apps/download/xd') != -1) {
+
+        loadFlashTalking();
+      }
+    }
+  } else if (xd_href != null) {
+
+    if ((xd_href.indexOf('products/download/xd')) != -1 || xd_href.indexOf('/apps/download/xd') != -1 ||
+      xd_href.indexOf('/all/xd/installation') != -1) {
+
+      loadFlashTalking();
+    }
+  }
+
+}
+
+document.onclick = myFunction; // event listener can be used also
+});

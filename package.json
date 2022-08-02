@@ -1,0 +1,14 @@
+{
+  "name": "nature",
+  "version": "1.0.0",
+  "description": "This is nature landing page",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "node-sass sass/nature.sass.scss nature.css -w"
+  },
+  "author": "Aryan baliyan",
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.12.0"
+  }
+}

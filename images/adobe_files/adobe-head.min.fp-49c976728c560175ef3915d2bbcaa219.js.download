@@ -1,0 +1,258 @@
+"use strict";
+function createDOM(f,e){var d=document.createElement(f),b,c,a;
+if(e){for(b=0,c=Object.keys(e),a=c.length;
+b<a;
+b++){d.setAttribute(c[b],e[c[b]])
+}return d
+}return d
+}function parents(f,c,e){var d=f,b,a=e?e:document.body;
+while(d&&d!==c&&d!==a){d=d.parentNode
+}b=d===c;
+return b
+}window.Adobe=!window.Adobe?{}:window.Adobe;
+window.Adobe.AceUI=!window.Adobe.AceUI?{}:window.Adobe.AceUI;
+window.Adobe.AceUI.cookies={cookieHost:".adobe.com",cookiePath:"/",getCookie:function(g){var f=g+"=",h=function(){return document.cookie
+},d=h(),a=d.indexOf(f),c=d.match(/.*[^;]$/i)?d+";":d,b=c.indexOf(";",a),e;
+if((a!==-1&&b!==-1)&&b>a){e=c.substring(a,b).split("=")[1];
+if(e){return e
+}else{return undefined
+}}else{return undefined
+}},setCookie:function(c,g,e){var f=new Date(),b=g.toString()?g:"",h=e?e:0,a;
+f.setTime(f.getTime()+(h*24*60*60*1000));
+a=h!==0?"expires="+f.toUTCString()+";":"expires="+0+";";
+document.cookie=c+"="+b+"; "+a+" domain="+this.cookieHost+"; path="+this.cookiePath+";"
+},resetCookieHost:function(a){this.cookieHost=a
+}};
+window.Adobe.AceUI.geoOb={options:{regionCookie:"international",modalCookie:"georouting_presented",defaultRegCookie:"us",defaultCountry:"US",geoArray:["africa","at","au","be_en","be_fr","be_nl","bg","br","ca","ca_fr","ch_de","ch_fr","ch_it","cis_en","cis_ru","cn","cy_en","cz","de","dk","ee","eeurope","es","fi","fr","gr_en","hk_en","hk_zh","hu","ie","il_en","il_he","in","it","jp","kr","la","lt","lu_de","lu_en","lu_fr","lv","mt","mena_ar","mena_en","mx","nl","no","nz","pl","pt","ro","ru","se","sea","si","sk","tr","tw","ua","uk"],searchMap:{"google.fr":"fr","google.co.uk":"uk","google.com.au":"au","google.co.jp":"jp","google.de":"de","google.ca":["ca","ca_fr"],"google.co.id":"sea","google.co.in":"in","google.com.ph":"sea","google.com.tr":"tr","google.nl":"nl","google.no":"no","google.co.nz":"nz","google.pl":"pl","google.pt":"pt","google.ro":"ro","google.ru":"ru","google.se":"se","google.si":"si","google.sk":"sk","google.com.tw":"tw","google.com.ua":"ua","google.co.za":"africa","google.com.ng":"africa","google.co.ke":"africa","google.com.gt":"la","google.co.cr":"la","google.com.co":"la","google.com.ar":"la","google.cl":"la","google.com.pa":"la","google.com.ec":"la","google.com.pe":"la","google.co.ve":"la","google.com.bo":"la","google.com.ni":"la","google.hn":"la","google.com.uy":"la","google.ae":["mena_ar","mena_en"],"google.com.kw":["mena_ar","mena_en"],"google.com.sa":["mena_ar","mena_en"],"google.com.bh":["mena_ar","mena_en"],"google.com.om":["mena_ar","mena_en"],"google.com.qa":["mena_ar","mena_en"],"google.jo":["mena_ar","mena_en"],"google.com.eg":["mena_ar","mena_en"],"google.co.ma":["mena_ar","mena_en"],"google.iq":["mena_ar","mena_en"],"google.tn":"mena_ar","google.com.sg":"sea","google.com.my":"sea","google.co.th":"sea","google.com.vn":"sea","google.li":"de","au.search.yahoo.com":"au","fr.search.yahoo.com":"fr","uk.search.yahoo.com":"uk","search.yahoo.co.jp":"jp","yandex.ru":["cis_en","cis_ru"],"de.search.yahoo.com":"de","tw.search.yahoo.com":"tw"},emea:["UK","FR","DE","SE","IT","ES","NL","DK","FI","EEUROPE","BG","CZ","EE","HU","LT","LV","PL","RO","SK","SI","AT","BE_EN","BE_FR","BE_NL","IE","LU_DE","LU_EN","LU_FR","PT","CY_EN","GR_EN","MT","CA","CA_FR"],regparams:{},localStore:"false",modalCK:"",modalwr:".modal.modal-dom.geo",modalbuttons:".modal-content .ui-button",modalClose:'label[for="modal-toggle"]',hangerButtons:"#geohanger .ui-botton",hangerClose:"#geohanger .close a",geoAdobecom:"https://geo2.adobe.com/json/?callback=ajpRsp",cqlocHost:"https://www.adobe.com",geoMap:{},urlItems:{href:window.location.href,path:window.location.pathname,protocol:window.location.protocol,hash:window.location.hash,search:window.location.search,origin:window.location.origin,host:window.location.host,hostname:window.location.hostname,referrer:document.referrer}},ajpf:function(b,a,f){var c=Date.now(),e=document.createElement("script"),d=a?"&"+this.queryString(a):"";
+b=d?b+d:b;
+window.ajpRsp=this.ajpRsp(f,"geo_"+c);
+e.type="text/javascript";
+e.src=b;
+e.id="geo_"+c;
+e.onerror=function(j,h,k,i,g){window.Adobe=(typeof window.Adobe==="undefined")?{}:window.Adobe;
+window.Adobe.geoLoadedFailed=true
+};
+document.querySelector("head").appendChild(e);
+window.setTimeout(function(){if(!window.Adobe.geoLoaded&&b===this.geoAdobecom){this.ajpRsp(function(){var g=document.createEvent("Event");
+this.akamai=this.akamai?this.akamai:{};
+this.akamai.country=this.defaultCountry;
+g.initEvent("aceui:geoLoaded",true,true);
+document.dispatchEvent(g)
+},e.id)
+}},3500)
+},ajpRsp:function(b,a){return function(f){var e=false,c=typeof f,d=document.getElementById(a);
+switch(c){case"string":e=JSON.parse(f);
+break;
+case"object":e=f;
+break
+}if(e){b(e)
+}else{throw ("invalid request or empty jsonp object")
+}if(d){d.parentNode.removeChild(d)
+}}
+},regionDirect:function(a,b){var c=new XMLHttpRequest();
+c.open("HEAD",a,true);
+c.onreadystatechange=function(){if(c.readyState!==4){return
+}if([200,201,202,203,204,205,206,302,304].indexOf(c.status)>=0){window.location=a
+}else{window.location=b
+}};
+c.setRequestHeader("Content-type","text/plain; charset=utf-8");
+c.send()
+},queryString:function(a){return Object.keys(a).map(function(b){return[b,a[b]].map(encodeURIComponent).join("=")
+}).join("&")
+},mapMaps:function(e,d){var b,c,a;
+for(b=0,c=Object.keys(d),a=c.length;
+b<a;
+b++){this.options[e][c[b]]=d[c[b]]
+}},devFlag:function(){var b=this.options.urlItems.host,a=b.replace(/(www.)/g,"").match(/^(qa|dev|stage|localhost)|(127.0.0.1)/g);
+if(a!==null){this.options.devFlag=true
+}},testMethod:function(e){var f=window.Adobe.AceUI.cookies,g=e.replace("?",""),h=g.split("&"),d=h.length,c,b,a;
+for(c=0;
+c<d;
+c++){b=h[c].split("=")[0];
+a=decodeURIComponent(h[c].split("=")[1]);
+switch(b){case"country":this.options.regparams[b]=a;
+break;
+case"accept-language":this.options.regparams[b]=a;
+break;
+case"international":f.setCookie(b,a,1);
+break;
+case"path":this.options.urlItems[b]=a;
+break;
+case"referrer":this.options.urlItems[b]=a;
+break
+}}}};
+window.Adobe.AceUI.geoModals={modaldom:createDOM("div",{"class":window.Adobe.AceUI.geoOb.options.modalwr.replace(/\./g," ").replace(/^ /,"")}),backdrop:createDOM("div",{"class":"modal-canvas"}),modalfrm:createDOM("div",{"class":"modal-frame"}),modalcontent:createDOM("div",{"class":"modal-content"}),wr:createDOM("div",{id:"geomodal","class":"grid-container geomodal"}),scrollwr:createDOM("div",{"class":"modalscrollwr"}),modalcol:{col:createDOM("div",{"class":"grid-span-5of5 modalcol"}),btns:createDOM("div",{"class":"modal-btns"}),icon:createDOM("i",{"class":"adobe-icon-globe icon-3x"}),scroller:createDOM("div",{"class":"paddedwr"}),build:function(f){var d,j,c,i,m,b,h,a,e,g,o,n=["AFRICA","AU","BE_EN","CA","CIS_EN","CY_EN","EG","EEUROPE","GR_EN","HK_EN","IE","IL_EN","IN","LU_EN","MENA_EN","MT","NZ","SEA","UK"];
+this.scroller.appendChild(this.icon);
+for(d=0,j=Object.keys(f).sort(),c=j.length;
+d<c;
+d++){i=f[j[d]];
+if(j[d].toLowerCase()==="_us"){a=createDOM("div",{"class":"ui-button"});
+e=createDOM("span",{"class":"default-lang",tabindex:1});
+e.innerHTML=i.button
+}else{g=createDOM("div",{"class":"ui-button"});
+h=createDOM("a",{href:"","data-alang":j[d]});
+h.innerHTML=i.button;
+g.appendChild(h);
+this.btns.appendChild(g)
+}if(n.indexOf(j[d].toUpperCase())===-1){m=createDOM("div",{"class":"geowr"});
+b=createDOM("p");
+b.innerHTML=i.blurb;
+m.appendChild(b);
+m.setAttribute("lang",i.adobe_language_path);
+m.setAttribute("writing_direction",i.writing_direction);
+this.scroller.appendChild(m)
+}}if(a){a.appendChild(e);
+this.btns.appendChild(a)
+}this.col.appendChild(this.scroller);
+this.scroller.appendChild(this.btns);
+return this.col
+}},hanger:{container:function(){return createDOM("div",{id:"geohanger"})
+},blockwr:function(){return createDOM("div")
+},text:function(){return createDOM("p")
+},button:function(){return createDOM("span",{"class":"ui-button"})
+},buttona:function(a){return createDOM("a",{href:a})
+},closer:function(){return createDOM("span",{"class":"close"})
+},closetarget:function(){return createDOM("a",{href:"#"})
+},closeicon:function(){return createDOM("i",{"class":"fa-times-circle"})
+}},sethanger:function(e){var c=window.Adobe.AceUI.geoModals,a=c.hanger.container(),i=c.hanger.blockwr(),j=c.hanger.text(),g=c.hanger.button(),h=c.hanger.buttona(e),k=c.hanger.closer(),d=c.hanger.closetarget(),f=document.querySelector("body > header")?document.querySelector("body > header"):document.querySelector(".Gnav-spacing"),b;
+d.appendChild(this.hanger.closeicon());
+k.appendChild(d);
+j.innerHTML="The page that you requested is not available in your preferred language, click the button below to view this page in:";
+h.innerHTML="English";
+g.appendChild(h);
+i.appendChild(j);
+i.appendChild(g);
+a.appendChild(i);
+a.appendChild(k);
+b=f?f:document.querySelector(".Gnav-wr");
+document.querySelector("body").insertBefore(a,b)
+},setmodal:function(d){var c=window.Adobe.AceUI,e=document.querySelector("body"),i=createDOM("span",{"class":"close"}),b=createDOM("a",{href:"#"}),g=createDOM("i",{"class":"ui-close"}),f=createDOM("i",{"class":"fa-times-circle"}),h=c.cookies,a=c.geoModals;
+b.appendChild(g);
+b.appendChild(f);
+i.appendChild(b);
+this.scrollwr.appendChild(a.modalcol.build(d));
+this.modalcontent.appendChild(a.scrollwr);
+this.modalfrm.appendChild(a.modalcontent);
+this.modalfrm.appendChild(i);
+this.backdrop.appendChild(a.modalfrm);
+this.modaldom.appendChild(a.backdrop);
+if(e){this.addModal(a,c,h)
+}else{document.addEventListener("DOMContentLoaded",function(){this.addModal(a,c,h)
+}.bind(this))
+}},removemodal:function(c,a){var e=!a?document.querySelector(".modal.modal-dom.geo"):a,d=e.parentNode;
+d.removeChild(e)
+},addModal:function(a,c,b){document.querySelector("body").appendChild(a.modaldom);
+b.setCookie(c.geoOb.options.modalCookie,true,30)
+}};
+window.geoOb=window.Adobe.AceUI.geoOb;
+function Loader(){var e=window.Adobe.AceUI,k=e.cookies,a=e.geoOb,m=a.options,b=e.geoModals,g=m.akamai,l=m.geoMap,d=m.urlItems,h=l.intlCookie,c=h===m.defaultRegCookie,f=m.geoArray.indexOf(d.path.split("/")[1])>=0?d.path.split("/")[1]:m.defaultRegCookie;
+function i(q,s,t){var r=m.urlItems,o=q.indexOf("ui-button")>=0?t.target:s.indexOf("ui-button")>=0?t.target.firstElementChild:"",u=o.getAttribute("data-alang"),v=(r.hash||r.search)?(r.path+r.search).replace(r.hash,""):r.path+r.search,n=r.protocol+"//"+r.host+"/"+u+v,p=r.protocol+"//"+r.host+"/"+u;
+if(u!==m.defaultRegCookie&&u!==undefined&&u!==null){k.setCookie(m.regionCookie,u,180);
+a.regionDirect(n,p)
+}else{b.removemodal(t.target)
+}}function j(r){var o=document.querySelector("#geohanger"),s=r.target.parentNode.getAttribute("class")?r.target.parentNode.getAttribute("class"):"",p=r.target.getAttribute("class")?r.target.getAttribute("class"):"",n=p&&(r.target.nodeName!=="A"&&r.target.nodeName!=="I")?r.target.firstElementChild.getAttribute("href"):r.target.nodeName!=="I"?r.target.getAttribute("href"):"",q=s.indexOf("ui-button")>=0||p.indexOf("ui-button")>=0;
+if(q){k.setCookie(a.options.regionCookie,"",0);
+window.location=n
+}else{if(n===""){b.removemodal(r.target,o)
+}}}this.redirect=function(){var q=d.protocol,p=d.host,s=(d.hash||d.search)?(d.path+d.search).replace(d.hash,""):d.path+d.search,o=s.split("/")[1],t=m.geoArray.indexOf(o)>=0?s.replace("/"+o,""):s,n=h!==m.defaultRegCookie?q+"//"+p+"/"+h+t:q+"//"+p+t,r=h!==m.defaultRegCookie?q+"//"+p+"/"+h:q+"//"+p;
+if(!c&&h!==f){a.regionDirect(n,r);
+return true
+}return false
+};
+this.load=function(){var v=g?g.country.toLowerCase():m.defaultCountry.toLowerCase(),q=d.referrer.replace(/(http[s]?:\/\/)(www.)?/i,"").split("/")[0],w=m.searchMap[q]!==""||m.searchMap[q]!==undefined?m.searchMap[q]:"",x=w!==""&&Array.isArray(w)?w[0].split("_")[0]:"",t=w!==""&&!Array.isArray(w)&&m.geoArray.indexOf(w)>=0?w:x,n=f===m.defaultRegCookie,o=t===m.defaultRegCookie,r=v===m.defaultCountry.toLowerCase(),s=t!==""?t:v,p,y,u;
+if((c&&n)&&m.modalCK===undefined&&((!o&&t!=="")||!r)){p=m.cqlocHost;
+y="/etc/beagle/public/";
+u="geoinfo."+s+".json";
+a.ajpf(p+y+u,false,function(z){a.mapMaps("geoMap",z);
+window.Adobe.AceUI.geoModals.setmodal(l.loc_strings)
+})
+}document.addEventListener("click",function(A){var J=document.querySelector(m.modalwr),I=document.querySelector(".evidon-banner")||document.querySelector(".evidon-barrier"),C=parents(A.target,I)&&A.target.tagName.toLowerCase()==="a",E,K,D,H,F,G,B,z;
+if(J&&!C){A.preventDefault();
+E=document.querySelector(".modal-canvas");
+K=parents(A.target,E,J);
+D=document.querySelector(".modal-frame");
+H=parents(A.target,D,J);
+F=A.target.parentNode.getAttribute("class")?A.target.parentNode.getAttribute("class"):"";
+G=A.target.getAttribute("class")?A.target.getAttribute("class"):"";
+B=F.indexOf("ui-button")>=0||G.indexOf("ui-button")>=0;
+z=parents(A.target,document.querySelector(".close"));
+if(K&&!H&&!B&&!z){b.removemodal(A.target);
+A.stopPropagation()
+}if(B&&!z){i(F,G,A);
+A.stopPropagation()
+}if(z){b.removemodal(A.target);
+A.stopPropagation()
+}}else{if(document.querySelector("#geohanger")){A.preventDefault();
+j(A);
+A.stopPropagation()
+}}A.stopPropagation()
+});
+document.addEventListener("keyup",function(z){if(z.keyCode===27&&document.querySelector(m.modalwr)){b.removemodal(z.target);
+z.stopPropagation()
+}})
+}
+}(function(){var b=document.createEvent("Event"),a=window.Adobe.AceUI.geoOb;
+if(a.options.urlItems.search){a.testMethod(a.options.urlItems.search)
+}a.ajpf(a.options.geoAdobecom,a.options.regparams,function(c){a.options.akamai={};
+a.mapMaps("akamai",c);
+b.initEvent("aceui:geoLoaded",true,true);
+window.Adobe=(typeof window.Adobe==="undefined")?{}:window.Adobe;
+window.Adobe.geoLoaded=true;
+document.dispatchEvent(b)
+})
+})();
+function initGeoLoader(){var f=window.Adobe.AceUI.cookies,g=window.Adobe.AceUI.geoOb,d=["adobe-students.com"],a=window.location.hostname.replace(/(www.)/,""),c,b;
+function e(){g.options.modalCK=f.getCookie(g.options.modalCookie);
+g.options.geoMap.intlCookie=g.options.geoArray.indexOf(f.getCookie(g.options.regionCookie))>=0?f.getCookie(g.options.regionCookie):g.options.defaultRegCookie;
+c=new Loader();
+b=c.redirect();
+if(b===false){c.load()
+}}if(d.indexOf(a)===-1){e()
+}}(function(b){var a="/etc.(fps.)?clientlibs/beagle/fe/resources/css/aceui-reimagine.min(.fp-[a-z0-9]+)?.css",c="/etc.(fps.)?clientlibs/beagle/fe/resources/js/aceui-reimagine.min(.fp-[a-z0-9]+)?.js";
+b.ACEUI_JS_REGEX=new RegExp(c,"g");
+b.ACEUI_CSS_REGEX=new RegExp(a,"g");
+b.HtmlComponent={insertCssLinkTag:function(h){var l=HtmlComponent.escapeJCRContent(h)+".customcss.css";
+var f=undefined;
+var e=document.head.getElementsByTagName("link");
+var d="";
+for(var g=0,k=e.length;
+g<k;
+g++){d=e[g].getAttribute("href");
+if(d==l){return
+}else{if(typeof d==="string"&&b.ACEUI_CSS_REGEX.test(d)){f=e[g]
+}}}if(f!=undefined){var j=document.createElement("link");
+j.href=l;
+j.rel="stylesheet";
+j.type="text/css";
+document.head.appendChild(j)
+}},insertJavascriptTag:function(j){var f=HtmlComponent.escapeJCRContent(j)+".customjavascript.js";
+var h=undefined;
+var g=document.body.getElementsByTagName("script");
+var e="";
+for(var d=0,l=g.length;
+d<l;
+d++){e=g[d].getAttribute("src");
+if(e==f){return
+}else{if(typeof e==="string"&&b.ACEUI_JS_REGEX.test(e)){h=g[d]
+}}}if(h!=undefined){var k=document.createElement("script");
+k.src=f;
+k.type="text/javascript";
+document.body.appendChild(k)
+}},validateContent:function(e){var d=e.getField("./customhtml");
+if(!HtmlComponent.hasValidContent(d.getValue())){CQ.Ext.MessageBox.show({title:"Error",msg:HtmlComponent.ERROR_MESSAGE,buttons:CQ.Ext.MessageBox.OK,icon:CQ.Ext.MessageBox.ERROR});
+e.findById("htmlTab").show();
+d.markInvalid(HtmlComponent.ERROR_MESSAGE);
+return false
+}return true
+},hasValidContent:function(d){var e=true;
+e=(d.indexOf("<script")===-1)&&(d.indexOf("<\/script")===-1)&&(d.indexOf("<style")===-1)&&(d.indexOf("</style")===-1)&&(d.indexOf("<link")===-1);
+return e
+},escapeJCRContent:function(d){return d.replace(/jcr:content/g,"_jcr_content")
+},ERROR_MESSAGE:"&lt;script&gt;, &lt;style&gt; & &lt;link&gt; tags are not supported. Please remove them & try again"}
+}(window));
+(function(a){a.CommonUtils={getMarketSegment:function(){var b;
+if(typeof $.cookie!=="undefined"){b=$.cookie("x-adobe-cart-marketsegment");
+if(typeof b==="undefined"){b=CommonUtils.DEFAULT
+}}return b
+},DEFAULT:"COM"}
+}(window));
